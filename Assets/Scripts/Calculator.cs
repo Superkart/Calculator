@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,32 +9,23 @@ public class Calculator : MonoBehaviour
 
     private Stack<int> inputStack = new Stack<int>();
     private float sum = 0;
+    private char[] symbols = { '+', '-', '*', '/' };
 
     public void NumberButton(int num)
     {
         inputField.text = inputField.text + "" +  num.ToString();
+        inputStack.Push(num);
     }
 
-    public void Add()
+    public void FunctionButton(int index)
     {
-        int count = 0;
-        if (inputField.text != null)
-        {
-            for (int i = 0; i < inputField.text.Length; i++)
-            {
-                if (inputField.text[i] != ' ')
-                {
-                    inputStack.Push(inputField.text[i]);
-                    Debug.Log(inputField.text[i]);
-                    count++;
-                }          
-            }
-        }
-        for (int i = 0; i < count; i++)
-        {
-           sum = sum + inputStack.Pop();
-        }
+        inputField.text = inputField.text + "" + symbols[index].ToString();
+    }
+
+    public void Equals()
+    {
         inputField.text = sum.ToString();
+        sum = 0;
     }
     public void Clear()
     {
